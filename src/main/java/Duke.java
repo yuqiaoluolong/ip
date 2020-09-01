@@ -4,8 +4,8 @@ public class Duke {
     public static String indentation = "    ";
     public static String secondIndentation = "  ";
     public static String horizontalLine = indentation + "<------------------------------------------------------------>\n";
-    public static String[] Lists = new String[100];
-    public static int numberOfList = 0;
+    public static Task[] Tasks = new Task[100];
+    public static int numberOfTasks = 0;
 
     public static void printStatement(String statement){
         System.out.println(horizontalLine + indentation + "Here is yuqiaoluolong's Duke: \n" + statement + horizontalLine);
@@ -22,6 +22,10 @@ public class Duke {
         String Bye = indentation + " Bye. Hope to see you again soon!\n";
         String inputCommand;
         boolean isBye = false;
+        int doneNum;
+
+        Tasks[0] = new Task("abc");
+        System.out.println(Tasks[0].description);
 
         printStatement("Hello from\n" + logo);
         printStatement(Greet);
@@ -30,29 +34,32 @@ public class Duke {
         while(!isBye) {
             inputCommand = in.nextLine();
             switch (inputCommand.trim()){
+                case "list":
+                    System.out.print(horizontalLine);
+                    System.out.println(indentation + "Here is yuqiaoluolong's Duke: ");
+                    for(int i = 0; i < numberOfTasks; i++){
+                        System.out.println(indentation + secondIndentation + (i+1) + ".["
+                                + Tasks[i].getStatusIcon() + "] " + Tasks[i].description);
+                    }
+                    System.out.println(horizontalLine);
+                    break;
                 case "bye":
                     printStatement(Bye);
                     isBye = true;
                     break;
-                case "list":
-                    System.out.print(horizontalLine);
-                    System.out.println(indentation + "Here is yuqiaoluolong's Duke: ");
-                    for(int i = 0; i < numberOfList; i++){
-                        System.out.println(indentation + secondIndentation + (i+1) + ". " + Lists[i]);
-                    }
-                    System.out.println(horizontalLine);
-                    break;
                 default:
-                    Lists[numberOfList] = inputCommand.trim();
-                    numberOfList++;
+                    if(inputCommand.contains("done")){
+                        doneNum = Integer.parseInt(inputCommand.replace("done", " ").trim());
+                        Tasks[doneNum-1].markAsDone();
+                        printStatement(indentation + secondIndentation + "Nice! I've marked this task as done: \n"
+                                + indentation + secondIndentation + secondIndentation + " ["
+                                + Tasks[doneNum-1].getStatusIcon() + "] " + Tasks[doneNum-1].description + "\n");
+                        break;
+                    }
+                    Tasks[numberOfTasks] = new Task(inputCommand.trim());
+                    numberOfTasks++;
                     printStatement(indentation + secondIndentation + "added: " + inputCommand + "\n");
-            }/*
-            if(inputCommand.trim().equals("bye")){                  //must use .equal() instead of ==
-                printStatement(Bye);
-                isBye = true;
-                break;
             }
-            printStatement(indentation + " added: " + inputCommand + "\n");*/
         }
 
     }
