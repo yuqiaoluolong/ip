@@ -24,9 +24,6 @@ public class Duke {
         boolean isBye = false;
         int doneNum;
 
-        Tasks[0] = new Task("abc");
-        System.out.println(Tasks[0].description);
-
         printStatement("Hello from\n" + logo);
         printStatement(Greet);
 
