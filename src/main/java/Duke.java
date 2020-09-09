@@ -10,6 +10,10 @@ public class Duke {
     public static Task[] tasks = new Task[MAX_NUM_TASKS];
     public static int numberOfTasks = 0;
 
+    public static class TodoNullException extends Exception {
+        //no other code needed
+    }
+
     public static void printStatement(String statement) {
         System.out.println(HORIZONTALLINE + INDENTATION + "Here is yuqiaoluolong's Duke: \n"
                 + statement + HORIZONTALLINE);
@@ -39,27 +43,42 @@ public class Duke {
         printStatement(DOUBLEINDENTATION + "Nice! I've marked this task as done: \n"
                 + TRIPLEINDENTATION + tasks[doneNum-1].toString() + "\n");
     }
-    public static void executeTodoCommand(Task[] tasks, int numberOfTasks, String inputCommand) {
-        tasks[numberOfTasks] = new Todo(inputCommand.replace("todo"," ").trim());
+    public static void executeTodoCommand(Task[] tasks, int numberOfTasks, String inputCommand) throws TodoNullException{
+        tasks[numberOfTasks] = new Todo(inputCommand.substring(inputCommand.indexOf("todo")+4).trim());
+        if(tasks[numberOfTasks].description.length() == 0){
+            throw new TodoNullException();
+        }
         printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
                 + TRIPLEINDENTATION + tasks[numberOfTasks].toString() + "\n" + DOUBLEINDENTATION
-                + "Now you have " + (numberOfTasks+1) + " tasks in the list.\n");
+                + "Now you have " + (numberOfTasks + 1) + " tasks in the list.\n");
     }
-    public static void executeDeadlineCommand(Task[] tasks, int numberOfTasks, String inputCommand) {
-        String description = getDescriptiong("deadline", inputCommand);
-        String date = inputCommand.substring(inputCommand.indexOf("/by")+3).trim();
-        tasks[numberOfTasks] = new Deadline(description, date);
+    public static boolean executeDeadlineCommand(Task[] tasks, int numberOfTasks, String inputCommand) {
+        try {
+            String description = getDescriptiong("deadline", inputCommand);
+            String date = inputCommand.substring(inputCommand.indexOf("/by") + 3).trim();
+            tasks[numberOfTasks] = new Deadline(description, date);
+        } catch(StringIndexOutOfBoundsException e) {
+            printStatement(DOUBLEINDENTATION + " ☹ OOPS!!! The description of a deadline cannot be empty.\n");
+            return true;
+        }       //catch the empty deadline command exception
         printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
                 + TRIPLEINDENTATION + tasks[numberOfTasks].toString() + "\n" + DOUBLEINDENTATION
                 + "Now you have " + (numberOfTasks+1) + " tasks in the list.\n");
+        return false;
     }
-    public static void executeEventCommand(Task[] tasks, int numberOfTasks, String inputCommand) {
-        String description = getDescriptiong("event", inputCommand);
-        String date = inputCommand.substring(inputCommand.indexOf("/at")+3).trim();
-        tasks[numberOfTasks] = new Event(description, date);
+    public static boolean executeEventCommand(Task[] tasks, int numberOfTasks, String inputCommand) {
+        try {
+            String description = getDescriptiong("event", inputCommand);
+            String date = inputCommand.substring(inputCommand.indexOf("/at") + 3).trim();
+            tasks[numberOfTasks] = new Event(description, date);
+        } catch (StringIndexOutOfBoundsException e){
+            printStatement(DOUBLEINDENTATION + " ☹ OOPS!!! The description of an event cannot be empty.\n");
+            return true;
+        }       //catch the empty event command exception
         printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
                 + TRIPLEINDENTATION + tasks[numberOfTasks].toString() + "\n" + DOUBLEINDENTATION
                 + "Now you have " + (numberOfTasks+1) + " tasks in the list.\n");
+        return false;
     }
 
     public static void main(String[] args) {
@@ -71,7 +90,7 @@ public class Duke {
         final String GREET = INDENTATION + " Hello! I'm Duke\n"
                 + INDENTATION + " What can I do for you?\n";
         final String BYE = INDENTATION + " Bye. Hope to see you again soon!\n";
-        final String WRONGMESSAGE = "Sorry, I don't know what's your command. Can you type again?\n";
+        final String WRONGMESSAGE = " ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n";
         boolean isNewTask;
         String inputCommand;
         boolean isBye = false;
@@ -79,6 +98,7 @@ public class Duke {
         String outputStatement;
         String description;
         String date;
+        boolean isCommandEmpty;
 
         printStatement("Hello from\n" + LOGO);          // greet in the beginning
         printStatement(GREET);
@@ -90,7 +110,11 @@ public class Duke {
                     || inputCommand.contains("event");
             switch (inputCommand.trim()) {
             case "list":
-                executeListCommand(inputCommand);
+                //try {
+                    executeListCommand(inputCommand);
+                /*} catch (NullPointerException e) {
+                    numberOfTasks--;
+                }*/
                 break;
             case "bye":
                 printStatement(BYE);
@@ -101,12 +125,23 @@ public class Duke {
                     executeDoneCommand(inputCommand);
                 } else if (isNewTask) {
                     if (inputCommand.contains("todo")) {
-                        executeTodoCommand(tasks, numberOfTasks, inputCommand);
+                        try {
+                            executeTodoCommand(tasks, numberOfTasks, inputCommand);
+                        } catch (TodoNullException e){      //catch the empty todo command exception
+                            printStatement(DOUBLEINDENTATION +
+                                    " ☹ OOPS!!! The description of a todo cannot be empty.\n");
+                            numberOfTasks--;    //to deal with "numberOfTasks++ below
+                        }
                     } else if (inputCommand.contains("deadline")) {
-                        executeDeadlineCommand(tasks, numberOfTasks, inputCommand);
-
+                        isCommandEmpty = executeDeadlineCommand(tasks, numberOfTasks, inputCommand);
+                        if(isCommandEmpty){
+                            numberOfTasks--;    //to deal with "numberOfTasks++ below
+                        }
                     } else if (inputCommand.contains("event")) {
-                        executeEventCommand(tasks, numberOfTasks, inputCommand);
+                        isCommandEmpty = executeEventCommand(tasks, numberOfTasks, inputCommand);
+                        if(isCommandEmpty){
+                            numberOfTasks--;    //to deal with "numberOfTasks++ below
+                        }
                     }
                     numberOfTasks++;
                 } else {
