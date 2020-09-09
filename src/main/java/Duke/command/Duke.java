@@ -1,3 +1,7 @@
+package Duke.command;
+
+import Duke.task.*;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -39,9 +43,13 @@ public class Duke {
     }
     public static void executeDoneCommand(String inputCommand) {
         int doneNum = getDoneNum(inputCommand);
-        tasks[doneNum-1].markAsDone();
-        printStatement(DOUBLEINDENTATION + "Nice! I've marked this task as done: \n"
-                + TRIPLEINDENTATION + tasks[doneNum-1].toString() + "\n");
+        try {
+            tasks[doneNum - 1].markAsDone();
+            printStatement(DOUBLEINDENTATION + "Nice! I've marked this task as done: \n"
+                    + TRIPLEINDENTATION + tasks[doneNum - 1].toString() + "\n");
+        } catch (NullPointerException e) {
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There is no task with such index.\n");
+        }       //catch the command "done x" and x is out of the doundary of the task list
     }
     public static void executeTodoCommand(Task[] tasks, int numberOfTasks, String inputCommand) throws TodoNullException{
         tasks[numberOfTasks] = new Todo(inputCommand.substring(inputCommand.indexOf("todo")+4).trim());
@@ -58,7 +66,7 @@ public class Duke {
             String date = inputCommand.substring(inputCommand.indexOf("/by") + 3).trim();
             tasks[numberOfTasks] = new Deadline(description, date);
         } catch(StringIndexOutOfBoundsException e) {
-            printStatement(DOUBLEINDENTATION + " ☹ OOPS!!! The description of a deadline cannot be empty.\n");
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The description of a deadline cannot be empty.\n");
             return true;
         }       //catch the empty deadline command exception
         printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
@@ -72,7 +80,7 @@ public class Duke {
             String date = inputCommand.substring(inputCommand.indexOf("/at") + 3).trim();
             tasks[numberOfTasks] = new Event(description, date);
         } catch (StringIndexOutOfBoundsException e){
-            printStatement(DOUBLEINDENTATION + " ☹ OOPS!!! The description of an event cannot be empty.\n");
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The description of an event cannot be empty.\n");
             return true;
         }       //catch the empty event command exception
         printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
@@ -90,7 +98,7 @@ public class Duke {
         final String GREET = INDENTATION + " Hello! I'm Duke\n"
                 + INDENTATION + " What can I do for you?\n";
         final String BYE = INDENTATION + " Bye. Hope to see you again soon!\n";
-        final String WRONGMESSAGE = " ☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n";
+        final String WRONGMESSAGE = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n";
         boolean isNewTask;
         String inputCommand;
         boolean isBye = false;
@@ -122,14 +130,18 @@ public class Duke {
                 break;
             default:
                 if (inputCommand.contains("done")) {
-                    executeDoneCommand(inputCommand);
+                    try {
+                        executeDoneCommand(inputCommand);
+                    } catch (NumberFormatException e) {
+                        printStatement(DOUBLEINDENTATION + "☹ OOPS!!! You did not indicate which task is done.\n");
+                    }       //catch the cammand "done" whithout any number
                 } else if (isNewTask) {
                     if (inputCommand.contains("todo")) {
                         try {
                             executeTodoCommand(tasks, numberOfTasks, inputCommand);
                         } catch (TodoNullException e){      //catch the empty todo command exception
                             printStatement(DOUBLEINDENTATION +
-                                    " ☹ OOPS!!! The description of a todo cannot be empty.\n");
+                                    "☹ OOPS!!! The description of a todo cannot be empty.\n");
                             numberOfTasks--;    //to deal with "numberOfTasks++ below
                         }
                     } else if (inputCommand.contains("deadline")) {
