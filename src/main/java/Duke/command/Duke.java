@@ -48,7 +48,7 @@ public class Duke {
             printStatement(DOUBLEINDENTATION + "Nice! I've marked this task as done: \n"
                     + TRIPLEINDENTATION + tasks[doneNum - 1].toString() + "\n");
         } catch (NullPointerException e) {
-            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There is no task with such index.\n");
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There is no task with such an index.\n");
         }       //catch the command "done x" and x is out of the doundary of the task list
     }
     public static void executeTodoCommand(Task[] tasks, int numberOfTasks, String inputCommand) throws TodoNullException{
@@ -132,9 +132,11 @@ public class Duke {
                 if (inputCommand.contains("done")) {
                     try {
                         executeDoneCommand(inputCommand);
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {     //catch the cammand "done" whithout any number
                         printStatement(DOUBLEINDENTATION + "☹ OOPS!!! You did not indicate which task is done.\n");
-                    }       //catch the cammand "done" whithout any number
+                    } catch (ArrayIndexOutOfBoundsException e) {      //catch commands like "done555"
+                        printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The index is out of the list boundary.\n");
+                    }
                 } else if (isNewTask) {
                     if (inputCommand.contains("todo")) {
                         try {
