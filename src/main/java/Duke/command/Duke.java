@@ -25,6 +25,9 @@ public class Duke {
     public static int getDoneNum(String inputCommand) {
         return Integer.parseInt(inputCommand.replace("done", " ").trim());
     }
+    public static int getDeleteNum(String inputCommand) {
+        return Integer.parseInt(inputCommand.replace("delete", " ").trim());
+    }
     public static String getDescriptiong(String index, String inputCommand) {
         if(index == "deadline") {
             return inputCommand.substring(inputCommand.indexOf("deadline")+8, inputCommand.indexOf("/")).trim();
@@ -51,6 +54,14 @@ public class Duke {
         } catch (NullPointerException e) {
             printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There is no task with such an index.\n");
         }       //catch the command "done x" and x is out of the doundary of the task list
+    }
+    public static void executeDeleteCommand(String inputCommand) {
+        int deleteNum = getDeleteNum(inputCommand);
+        printStatement(DOUBLEINDENTATION + "Noted. I've removed this task: \n" +
+                TRIPLEINDENTATION + tasks.get(deleteNum-1).toString() + "\n" +
+                DOUBLEINDENTATION + "Now you have " + (numberOfTasks-1) + " tasks in the list.\n");
+        tasks.remove(deleteNum-1);
+        numberOfTasks--;
     }
 
     public static void executeTodoCommand(ArrayList<Task> tasks, int numberOfTasks, String inputCommand) throws TodoNullException{
@@ -120,11 +131,7 @@ public class Duke {
                     || inputCommand.contains("event");
             switch (inputCommand.trim()) {
             case "list":
-                //try {
-                    executeListCommand(inputCommand);
-                /*} catch (NullPointerException e) {
-                    numberOfTasks--;
-                }*/
+                executeListCommand(inputCommand);
                 break;
             case "bye":
                 printStatement(BYE);
@@ -139,6 +146,8 @@ public class Duke {
                     } catch (ArrayIndexOutOfBoundsException e) {      //catch commands like "done555"
                         printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The index is out of the list boundary.\n");
                     }
+                } else if (inputCommand.contains("delete")) {
+                    executeDeleteCommand(inputCommand);
                 } else if (isNewTask) {
                     if (inputCommand.contains("todo")) {
                         try {
