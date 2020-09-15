@@ -11,7 +11,7 @@ public class Duke {
     public static final String TRIPLEINDENTATION = DOUBLEINDENTATION + "  ";
     public static final String HORIZONTALLINE = INDENTATION
             + "<------------------------------------------------------------>\n";
-    public static ArrayList<Task> tasks = new ArrayList<>();
+    private static ArrayList<Task> tasks = new ArrayList<>();
     public static int numberOfTasks = 0;
 
     public static class TodoNullException extends Exception {
@@ -22,11 +22,9 @@ public class Duke {
         System.out.println(HORIZONTALLINE + INDENTATION + "Here is yuqiaoluolong's Duke: \n"
                 + statement + HORIZONTALLINE);
     }
-
     public static int getDoneNum(String inputCommand) {
         return Integer.parseInt(inputCommand.replace("done", " ").trim());
     }
-
     public static String getDescriptiong(String index, String inputCommand) {
         if(index == "deadline") {
             return inputCommand.substring(inputCommand.indexOf("deadline")+8, inputCommand.indexOf("/")).trim();
@@ -44,25 +42,19 @@ public class Duke {
         }
         System.out.println(HORIZONTALLINE);
     }
-
     public static void executeDoneCommand(String inputCommand) {
         int doneNum = getDoneNum(inputCommand);
         try {
             tasks.get(doneNum - 1).markAsDone();
             printStatement(DOUBLEINDENTATION + "Nice! I've marked this task as done: \n"
                     + TRIPLEINDENTATION + tasks.get(doneNum - 1).toString() + "\n");
-        } catch (IndexOutOfBoundsException e) {
+        } catch (NullPointerException e) {
             printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There is no task with such an index.\n");
         }       //catch the command "done x" and x is out of the doundary of the task list
     }
 
-    public static void executeTodoCommand(ArrayList<Task> tasks, int numberOfTasks, String inputCommand)
-            throws TodoNullException {
-        try {
-            tasks.add(numberOfTasks, new Todo(inputCommand.substring(inputCommand.indexOf("todo") + 4).trim()));
-        } catch (IndexOutOfBoundsException e) {
-            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There must be an index following toso\n");
-        }
+    public static void executeTodoCommand(ArrayList<Task> tasks, int numberOfTasks, String inputCommand) throws TodoNullException{
+        tasks.add(numberOfTasks, new Todo(inputCommand.substring(inputCommand.indexOf("todo") + 4).trim()));
         if(tasks.get(numberOfTasks).description.length() == 0){
             throw new TodoNullException();
         }
@@ -70,22 +62,20 @@ public class Duke {
                 + TRIPLEINDENTATION + tasks.get(numberOfTasks).toString() + "\n" + DOUBLEINDENTATION
                 + "Now you have " + (numberOfTasks + 1) + " tasks in the list.\n");
     }
-
     public static boolean executeDeadlineCommand(ArrayList<Task> tasks, int numberOfTasks, String inputCommand) {
         try {
             String description = getDescriptiong("deadline", inputCommand);
             String date = inputCommand.substring(inputCommand.indexOf("/by") + 3).trim();
             tasks.add(numberOfTasks, new Deadline(description, date));
-        } catch(StringIndexOutOfBoundsException e) {
-            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The description of a deadline cannot be empty.\n");
+        } catch (StringIndexOutOfBoundsException e) {    //catch the empty deadline command exception
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! There is nothing following \"deadline\".\n");
             return true;
-        }       //catch the empty deadline command exception
+        }
         printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
                 + TRIPLEINDENTATION + tasks.get(numberOfTasks).toString() + "\n" + DOUBLEINDENTATION
                 + "Now you have " + (numberOfTasks+1) + " tasks in the list.\n");
         return false;
     }
-
     public static boolean executeEventCommand(ArrayList<Task> tasks, int numberOfTasks, String inputCommand) {
         try {
             String description = getDescriptiong("event", inputCommand);
@@ -130,7 +120,11 @@ public class Duke {
                     || inputCommand.contains("event");
             switch (inputCommand.trim()) {
             case "list":
-                executeListCommand(inputCommand);
+                //try {
+                    executeListCommand(inputCommand);
+                /*} catch (NullPointerException e) {
+                    numberOfTasks--;
+                }*/
                 break;
             case "bye":
                 printStatement(BYE);
