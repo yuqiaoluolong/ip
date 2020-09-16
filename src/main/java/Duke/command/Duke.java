@@ -2,12 +2,9 @@ package Duke.command;
 
 import Duke.task.*;
 import java.util.Scanner;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
 import java.io.FileWriter;
 import java.io.IOException;
->>>>>>> branch-Level-7
 
 public class Duke {
     public static final int MAX_NUM_TASKS = 100;
@@ -116,7 +113,7 @@ public class Duke {
     private static void write(int numberOfTasks, String file) {
         String textToAdd = "";
         for(int i = 0; i<numberOfTasks; i++) {
-            textToAdd += tasks[i].toString() + System.lineSeparator();
+            textToAdd += tasks.get(i).toString() + System.lineSeparator();
         }
         try {
             writeToFile(file, textToAdd);
@@ -170,12 +167,10 @@ public class Duke {
                     } catch (ArrayIndexOutOfBoundsException e) {      //catch commands like "done555"
                         printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The index is out of the list boundary.\n");
                     }
-<<<<<<< HEAD
+                    write(numberOfTasks, file);
                 } else if (inputCommand.contains("delete")) {
                     executeDeleteCommand(inputCommand);
-=======
                     write(numberOfTasks, file);
->>>>>>> branch-Level-7
                 } else if (isNewTask) {
                     if (inputCommand.contains("todo")) {
                         try {
