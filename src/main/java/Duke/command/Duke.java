@@ -2,7 +2,12 @@ package Duke.command;
 
 import Duke.task.*;
 import java.util.Scanner;
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+import java.io.FileWriter;
+import java.io.IOException;
+>>>>>>> branch-Level-7
 
 public class Duke {
     public static final int MAX_NUM_TASKS = 100;
@@ -102,6 +107,24 @@ public class Duke {
         return false;
     }
 
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+    private static void write(int numberOfTasks, String file) {
+        String textToAdd = "";
+        for(int i = 0; i<numberOfTasks; i++) {
+            textToAdd += tasks[i].toString() + System.lineSeparator();
+        }
+        try {
+            writeToFile(file, textToAdd);
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         final String LOGO = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -120,6 +143,7 @@ public class Duke {
         String description;
         String date;
         boolean isCommandEmpty;
+        String file = "data/duke.txt";
 
         printStatement("Hello from\n" + LOGO);          // greet in the beginning
         printStatement(GREET);
@@ -146,8 +170,12 @@ public class Duke {
                     } catch (ArrayIndexOutOfBoundsException e) {      //catch commands like "done555"
                         printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The index is out of the list boundary.\n");
                     }
+<<<<<<< HEAD
                 } else if (inputCommand.contains("delete")) {
                     executeDeleteCommand(inputCommand);
+=======
+                    write(numberOfTasks, file);
+>>>>>>> branch-Level-7
                 } else if (isNewTask) {
                     if (inputCommand.contains("todo")) {
                         try {
@@ -157,16 +185,19 @@ public class Duke {
                                     "☹ OOPS!!! The description of a todo cannot be empty.\n");
                             numberOfTasks--;    //to deal with "numberOfTasks++ below
                         }
+                        write(numberOfTasks+1, file);
                     } else if (inputCommand.contains("deadline")) {
                         isCommandEmpty = executeDeadlineCommand(tasks, numberOfTasks, inputCommand);
                         if(isCommandEmpty){
                             numberOfTasks--;    //to deal with "numberOfTasks++ below
                         }
+                        write(numberOfTasks+1, file);
                     } else if (inputCommand.contains("event")) {
                         isCommandEmpty = executeEventCommand(tasks, numberOfTasks, inputCommand);
                         if(isCommandEmpty){
                             numberOfTasks--;    //to deal with "numberOfTasks++ below
                         }
+                        write(numberOfTasks+1, file);
                     }
                     numberOfTasks++;
                 } else {
