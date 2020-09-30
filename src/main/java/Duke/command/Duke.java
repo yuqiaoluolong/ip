@@ -140,8 +140,7 @@ public class Duke {
         String description;
         String date;
         boolean isCommandEmpty;
-        String file = "data/duke.txt";
-
+        String file = "/Users/yuqiao/Desktop/CS2113T/ip/data/duke.txt";
         printStatement("Hello from\n" + LOGO);          // greet in the beginning
         printStatement(GREET);
 
