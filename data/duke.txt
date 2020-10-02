@@ -1,1 +1,4 @@
-[T][✘] task1
+[T][✓] task
+[T][✘] task2
+[D][✘] d2 (by: 6pm)
+[E][✘] e1 (at: 7pm, tommorow)
