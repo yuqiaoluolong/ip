@@ -1,4 +1,4 @@
-[T][✓] task
-[T][✘] task2
-[D][✘] d2 (by: 6pm)
-[E][✘] e1 (at: 7pm, tommorow)
+[T][✘] task1
+[D][✘] d2 (by: Year.2015, Month.FEBRUARY, Day.20, Time: h.6, m.30)
+[D][✘] e1 (by: Year.2015, Month.FEBRUARY, Day.20, Time: h.6, m.30)
+[T][✘] task4
