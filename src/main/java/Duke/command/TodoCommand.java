@@ -1,5 +1,7 @@
 package Duke.command;
 
+import Duke.DukeException.DeadlineNullException;
+import Duke.DukeException.EventNullException;
 import Duke.DukeException.TodoNullException;
 import Duke.storage.Storage;
 import Duke.task.Todo;
@@ -25,7 +27,8 @@ public class TodoCommand extends Command {
      * add a new Todo into the taskList.
      */
     @Override
-    public void execute(TaskList tasks, UI ui, Storage storage) throws TodoNullException{
+    public void execute(TaskList tasks, UI ui, Storage storage) throws TodoNullException, DeadlineNullException,
+            EventNullException {
         super.execute(tasks, ui, storage);
         tasks.add(new Todo(this.description));
         if(tasks.get(numberOfTasks-1).description.length() == 0){

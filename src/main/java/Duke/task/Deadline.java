@@ -4,11 +4,13 @@ package Duke.task;
  * Represents a Deadline Task. A<code>deadline</code> corresponds to a task
  * described by description ,isDone, and by.
  */
+import java.time.LocalDateTime;
+
 public class Deadline extends Task {
 
-    protected String by;
+    protected LocalDateTime by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime by) {
         super(description);
         this.by = by;
     }
@@ -18,6 +20,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: Year." + by.getYear() +", Month." + by.getMonth()
+                + ", Day." + by.getDayOfMonth() +", Time: h." + by.getHour() +", m." + by.getMinute() + ")";
     }
 }
