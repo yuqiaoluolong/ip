@@ -79,12 +79,6 @@ public class Duke {
                 } catch (EventNullException e) {
                     numberOfTasks--;
                 }
-
-            /*} catch (DukeException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }*/
         }
     }
 
