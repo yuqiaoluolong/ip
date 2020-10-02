@@ -6,11 +6,22 @@ import Duke.ui.UI;
 
 import static Duke.ui.UI.*;
 
+/**
+ * Represents a DoneCommand with description and numberOfTasks.
+ * A <code>done</code> object corresponds to a DoneCommand
+ * with the description extracted from what entered by users,
+ * which is the index of the task users intend to mark as done.
+ */
 public class DoneCommand extends Command {
     public DoneCommand(String description, int numberOfTasks) {
         super(description, numberOfTasks);
     }
 
+    /**
+     * Override: Execute the Command.
+     * Mark the task with the entered index as done.
+     * Print out the done message.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage){
         try {
@@ -24,6 +35,10 @@ public class DoneCommand extends Command {
         }
     }
 
+    /**
+     * Execute the save function.
+     * Save the changed taskList into the file
+     */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
         Storage.save(tasks, numberOfTasks);

@@ -4,8 +4,10 @@ import Duke.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents an ArrayList of Task.
+ */
 public class TaskList {
-    public static final int MAX_NUM_TASKS = 100;
     private static ArrayList<Task> taskList = new ArrayList<>();
 
     public TaskList() {
@@ -17,14 +19,28 @@ public class TaskList {
         }
     }
 
+    /**
+     * add one element to the taskList
+     */
     public void add(Task oneTask){
         taskList.add(oneTask);
     }
 
+    /**
+     * get the element in the taskList with entered index
+     *
+     * @param index  the index of the element in taskList that we want.
+     * @return the element of type Task
+     */
     public Task get(int index){
         return taskList.get(index);
     }
 
+    /**
+     * remove one element in the taskList with entered index
+     *
+     * @param  i the index of the element in taskList that we want to remove.
+     */
     public void remove(int i) {
         taskList.remove(i);
     }

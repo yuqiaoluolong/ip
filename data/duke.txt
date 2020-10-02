@@ -1,4 +1,3 @@
-[T][✘] task1
 [D][✘] d2 (by: Year.2015, Month.FEBRUARY, Day.20, Time: h.6, m.30)
 [D][✘] e1 (by: Year.2015, Month.FEBRUARY, Day.20, Time: h.6, m.30)
 [T][✘] task4

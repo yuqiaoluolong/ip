@@ -13,6 +13,11 @@ import java.time.LocalDateTime;
 import static Duke.ui.UI.DOUBLEINDENTATION;
 import static Duke.ui.UI.TRIPLEINDENTATION;
 
+/**
+ * Represents an EventCommand with description and numberOfTasks.
+ * A <code>event</code> object corresponds to a TodoCommand
+ * with the description and happening time extracted from what entered by users.
+ */
 public class EventCommand extends Command {
     protected LocalDateTime at;
 
@@ -21,6 +26,10 @@ public class EventCommand extends Command {
         this.at = LocalDateTime.parse(at);
     }
 
+    /**
+     * Override: Execute the Command.
+     * add a new Event into the taskList.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) throws TodoNullException, DeadlineNullException,
             EventNullException {
@@ -34,6 +43,10 @@ public class EventCommand extends Command {
                 + "Now you have " + (numberOfTasks) + " tasks in the list.\n");
     }
 
+    /**
+     * Execute the save function.
+     * Save the changed taskList into the file
+     */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
         Storage.save(tasks, numberOfTasks);

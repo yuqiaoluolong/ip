@@ -13,6 +13,11 @@ import java.time.format.DateTimeParseException;
 
 import static Duke.ui.UI.*;
 
+/**
+ * Represents a DeadlineCommand with description and numberOfTasks.
+ * A <code>deadline</code> object corresponds to a TodoCommand
+ * with the description and due time extracted from what entered by users.
+ */
 public class DeadlineCommand extends Command {
     protected LocalDateTime by;
 
@@ -25,6 +30,10 @@ public class DeadlineCommand extends Command {
         }
     }
 
+    /**
+     * Override: Execute the Command.
+     * add a new Deadline into the taskList.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) throws TodoNullException, DeadlineNullException,
             EventNullException {
@@ -38,6 +47,10 @@ public class DeadlineCommand extends Command {
                 + "Now you have " + (numberOfTasks) + " tasks in the list.\n");
     }
 
+    /**
+     * Execute the save function.
+     * Save the changed taskList into the file
+     */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
         Storage.save(tasks, numberOfTasks);

@@ -6,11 +6,18 @@ import Duke.ui.UI;
 
 import static Duke.ui.UI.*;
 
+/**
+ * Represents a ListCommand with description and numberOfTasks.
+ */
 public class ListCommand extends Command {
     public ListCommand(String description, int numberOfTasks) {
         super(description, numberOfTasks);
     }
 
+    /**
+     * Override: Execute the Command.
+     * Print out all the tasks in the taskList.
+     */
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage) {
         System.out.print(HORIZONTALLINE);
