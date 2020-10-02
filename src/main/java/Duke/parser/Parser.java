@@ -72,4 +72,12 @@ public class Parser {
     public static Command parseExceptionCommand(int numberOfTasks) {
         return new ExceptionCommand("exception", numberOfTasks);
     }
+
+    public static Command parseFindCommand(String index, int numberOfTasks) {
+        return new FindCommand(index, numberOfTasks);
+    }
+
+    public static Command parseHelpCommand(int numberOfTasks) {
+        return new HelpCommand("help", numberOfTasks);
+    }
 }
