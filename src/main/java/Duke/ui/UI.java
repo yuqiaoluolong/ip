@@ -18,7 +18,7 @@ public class UI {
             + TRIPLEINDENTATION + "| |_| | |_| |   <  __/\n"
             + TRIPLEINDENTATION + "|____/ \\__,_|_|\\_\\___|\n";
     public final String GREET = INDENTATION + " Hello! I'm Duke\n"
-            + INDENTATION + " What can I do for you? (type\"help\" to get explanation)\n";
+            + INDENTATION + " What can I do for you?\n";
     public final String BYE = INDENTATION + " Bye. Hope to see you again soon!\n";
     public final String WRONGMESSAGE = "☹ OOPS!!! I'm sorry, but I don't know what that means :-(\n";
 

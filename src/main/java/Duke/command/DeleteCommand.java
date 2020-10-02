@@ -13,14 +13,10 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, UI ui, Storage storage){
-        try {
-            printStatement(DOUBLEINDENTATION + "Noted. I've removed this task: \n" +
-                    TRIPLEINDENTATION + tasks.get(Integer.parseInt(this.description)-1).toString() + "\n" +
-                    DOUBLEINDENTATION + "Now you have " + (numberOfTasks-1) + " tasks in the list.\n");
-            tasks.remove(Integer.parseInt(this.description)-1);
-        } catch (NumberFormatException e) {
-            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! You did not indicate which task to delete.\n");
-        }
+        printStatement(DOUBLEINDENTATION + "Noted. I've removed this task: \n" +
+                TRIPLEINDENTATION + tasks.get(Integer.parseInt(this.description)-1).toString() + "\n" +
+                DOUBLEINDENTATION + "Now you have " + (numberOfTasks-1) + " tasks in the list.\n");
+        tasks.remove(Integer.parseInt(this.description)-1);
     }
 
     @Override
