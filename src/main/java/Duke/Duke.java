@@ -49,13 +49,8 @@ public class Duke {
                 } else if(fullCommand.contains("event")) {
                     c = Parser.parseEventCommand(fullCommand, numberOfTasks);
                     numberOfTasks++;
-                } else if(fullCommand.contains("help")) {
-                    c = Parser.parseHelpCommand(numberOfTasks);
                 } else if(fullCommand.contains("list")){
                     c = Parser.parseListCommand(numberOfTasks);
-                } else if(fullCommand.contains("find")) {
-                    c = Parser.parseFindCommand(fullCommand.substring(fullCommand.indexOf("find")+4).trim(),
-                            numberOfTasks);
                 } else if(fullCommand.contains("done")) {
                     c = Parser.parseDoneCommand(fullCommand, numberOfTasks);
                 } else if(fullCommand.contains("delete")) {
