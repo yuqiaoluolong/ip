@@ -4,6 +4,10 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+/**
+ * Represents a ui
+ * Contains the common constant Strings and methods
+ */
 public class UI {
     private static final String LS = System.lineSeparator();
     public static final int MAX_NUM_TASKS = 100;
@@ -33,21 +37,37 @@ public class UI {
         this.out = out;
     }
 
+    /**
+     * print out the input String
+     * @param statement  The String need to print.
+     */
     public static void printStatement(String statement) {
         System.out.println(HORIZONTALLINE + INDENTATION + "Here is yuqiaoluolong's Duke: \n"
                 + statement + HORIZONTALLINE);
     }
 
+    /**
+     * print out the Welcome message
+     */
     public void showWelcome() {
         printStatement(TRIPLEINDENTATION + "Hello from\n" + LOGO);
         printStatement(GREET);
     }
+
+    /**
+     * Returns what is entered by users as a String variable.
+     *
+     * @return inputcommand.
+     */
 
     public String readCommand(){
         String input = in.nextLine();
         return input;
     }
 
+    /**
+     * Show a line.
+     */
     public void showLine(){
         System.out.printf(LS);
     }
