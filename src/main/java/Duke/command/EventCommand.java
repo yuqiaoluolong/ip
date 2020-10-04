@@ -9,9 +9,9 @@ import Duke.taskList.TaskList;
 import Duke.ui.UI;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
-import static Duke.ui.UI.DOUBLEINDENTATION;
-import static Duke.ui.UI.TRIPLEINDENTATION;
+import static Duke.ui.UI.*;
 
 /**
  * Represents an EventCommand with description and numberOfTasks.
@@ -23,7 +23,11 @@ public class EventCommand extends Command {
 
     public EventCommand(String description, int numberOfTasks, String at) {
         super(description, numberOfTasks);
-        this.at = LocalDateTime.parse(at);
+        try {
+            this.at = LocalDateTime.parse(at);
+        } catch (DateTimeParseException e) {
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The time entered is not in the format(yyyy-mm-dd).\n");
+        }
     }
 
     /**
@@ -39,8 +43,8 @@ public class EventCommand extends Command {
         }
         tasks.add(new Event(this.description, this.at));
         ui.printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
-                + TRIPLEINDENTATION + tasks.get(numberOfTasks - 1).toString() + "\n" + DOUBLEINDENTATION
-                + "Now you have " + (numberOfTasks) + " tasks in the list.\n");
+                + TRIPLEINDENTATION + tasks.get(numberOfTasks).toString() + "\n" + DOUBLEINDENTATION
+                + "Now you have " + (numberOfTasks + 1) + " tasks in the list.\n");
     }
 
     /**
@@ -49,6 +53,6 @@ public class EventCommand extends Command {
      */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
-        Storage.save(tasks, numberOfTasks);
+        Storage.save(tasks, numberOfTasks + 1);
     }
 }

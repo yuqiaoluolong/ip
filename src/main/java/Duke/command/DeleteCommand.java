@@ -31,6 +31,8 @@ public class DeleteCommand extends Command {
             tasks.remove(Integer.parseInt(this.description)-1);
         } catch (NumberFormatException e) {
             printStatement(DOUBLEINDENTATION + "☹ OOPS!!! You did not indicate which task to delete.\n");
+        } catch (IndexOutOfBoundsException e) {
+            printStatement(DOUBLEINDENTATION + "☹ OOPS!!! The index is out of the boundary.\n");
         }
     }
 
@@ -40,6 +42,8 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
-        Storage.save(tasks, numberOfTasks-1);
+        if(this.description.length() != 0 && Integer.parseInt(this.description) <= numberOfTasks) {
+            Storage.save(tasks, numberOfTasks-1);
+        }
     }
 }

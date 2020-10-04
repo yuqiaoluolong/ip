@@ -14,8 +14,12 @@ public class TaskList {
     }
 
     public TaskList(ArrayList<Task> tasks) {
-        for(int i=0; i< tasks.size(); i++){
-            taskList.add(tasks.get(i));
+        try {
+            for(int i=0; i< tasks.size(); i++){
+                taskList.add(tasks.get(i));
+            }
+        } catch (NullPointerException e) {
+
         }
     }
 

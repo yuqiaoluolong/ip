@@ -43,8 +43,8 @@ public class DeadlineCommand extends Command {
         }
         tasks.add(new Deadline(this.description, this.by));
         ui.printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
-                + TRIPLEINDENTATION + tasks.get(numberOfTasks - 1).toString() + "\n" + DOUBLEINDENTATION
-                + "Now you have " + (numberOfTasks) + " tasks in the list.\n");
+                + TRIPLEINDENTATION + tasks.get(numberOfTasks).toString() + "\n" + DOUBLEINDENTATION
+                + "Now you have " + (numberOfTasks + 1) + " tasks in the list.\n");
     }
 
     /**
@@ -53,6 +53,6 @@ public class DeadlineCommand extends Command {
      */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
-        Storage.save(tasks, numberOfTasks);
+        Storage.save(tasks, numberOfTasks + 1);
     }
 }

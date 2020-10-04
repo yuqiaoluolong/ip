@@ -11,6 +11,7 @@ import Duke.ui.UI;
 
 import java.time.Month;
 
+import static Duke.parser.Parser.*;
 import static Duke.ui.UI.DOUBLEINDENTATION;
 import static Duke.ui.UI.printStatement;
 
@@ -41,27 +42,32 @@ public class Duke {
                 ui.showLine(); // show the divider line ("_______")
                 Command c;
                 if(fullCommand.contains("todo")) {
-                    c = Parser.parseTodoCommand(fullCommand, numberOfTasks);
+                    c = parseTodoCommand(fullCommand, numberOfTasks);
                     numberOfTasks++;
                 } else if(fullCommand.contains("deadline")){
-                    c = Parser.parseDeadlineCommand(fullCommand, numberOfTasks);
+                    c = parseDeadlineCommand(fullCommand, numberOfTasks);
                     numberOfTasks++;
                 } else if(fullCommand.contains("event")) {
-                    c = Parser.parseEventCommand(fullCommand, numberOfTasks);
+                    c = parseEventCommand(fullCommand, numberOfTasks);
                     numberOfTasks++;
+                } else if(fullCommand.contains("help")) {
+                    c = parseHelpCommand(numberOfTasks);
                 } else if(fullCommand.contains("list")){
-                    c = Parser.parseListCommand(numberOfTasks);
+                    c = parseListCommand(numberOfTasks);
+                } else if(fullCommand.contains("find")) {
+                    c = Parser.parseFindCommand(fullCommand.substring(fullCommand.indexOf("find")+4).trim(),
+                            numberOfTasks);
                 } else if(fullCommand.contains("done")) {
-                    c = Parser.parseDoneCommand(fullCommand, numberOfTasks);
+                    c = parseDoneCommand(fullCommand, numberOfTasks);
                 } else if(fullCommand.contains("delete")) {
-                    c = Parser.parseDeleteCommand(fullCommand, numberOfTasks);
-                    if(c.description.length() != 0) {
+                    c = parseDeleteCommand(fullCommand, numberOfTasks);
+                    if(c.description.length() != 0 && Integer.parseInt(c.description) <= numberOfTasks) {
                         numberOfTasks--;
                     }
                 } else if(fullCommand.contains("bye")){
-                    c = Parser.parseExitCommand(numberOfTasks);
+                    c = parseExitCommand(numberOfTasks);
                 } else {
-                    c = Parser.parseExceptionCommand(numberOfTasks);
+                    c = parseExceptionCommand(numberOfTasks);
                 }
                 try{
                     c.execute(tasks, ui, storage);

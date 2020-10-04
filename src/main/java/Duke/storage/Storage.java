@@ -10,6 +10,7 @@ import Duke.taskList.TaskList;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -145,6 +146,8 @@ public class Storage {
                 }
             }
             return tasklist;
+        } catch (NoSuchFileException e) {
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -178,10 +181,12 @@ public class Storage {
                 number++;
             }
             return number;
-        } catch (IOException e) {
+        } catch (NoSuchFileException e) {
+
+        } catch(IOException e) {
             e.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 }
 

@@ -31,12 +31,12 @@ public class TodoCommand extends Command {
             EventNullException {
         super.execute(tasks, ui, storage);
         tasks.add(new Todo(this.description));
-        if(tasks.get(numberOfTasks-1).description.length() == 0){
+        if(tasks.get(numberOfTasks).description.length() == 0){
             throw new TodoNullException();
         }
         ui.printStatement(DOUBLEINDENTATION + "Got it. I've added this task:\n"
-                + TRIPLEINDENTATION + tasks.get(numberOfTasks - 1).toString() + "\n" + DOUBLEINDENTATION
-                + "Now you have " + (numberOfTasks) + " tasks in the list.\n");
+                + TRIPLEINDENTATION + tasks.get(numberOfTasks).toString() + "\n" + DOUBLEINDENTATION
+                + "Now you have " + (numberOfTasks + 1) + " tasks in the list.\n");
     }
 
     /**
@@ -45,6 +45,6 @@ public class TodoCommand extends Command {
      */
     @Override
     public void sava(TaskList tasks, UI ui, Storage storage){
-        Storage.save(tasks, numberOfTasks);
+        Storage.save(tasks, numberOfTasks + 1);
     }
 }
