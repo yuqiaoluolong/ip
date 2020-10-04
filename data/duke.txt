@@ -1,2 +1,1 @@
-[D][✘] assignment1 (by: Year.2020, Month.SEPTEMBER, Day.20, Time: h.6, m.30)
-[E][✘] a lecture (at: Year.2020, Month.FEBRUARY, Day.20, Time: h.12, m.0)
+[T][✘] task1
