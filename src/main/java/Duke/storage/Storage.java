@@ -25,7 +25,7 @@ import static Duke.ui.UI.printStatement;
  * Represents a class saving the tasklist to a file and load the content from it.
  */
 public class Storage {
-    public static final String DEFAULT_STORAGE_FILEPATH = "/Users/yuqiao/Desktop/CS2113T/ip/data/duke.txt";
+    public static final String DEFAULT_STORAGE_FILEPATH = "Duke.txt";
     public static Path path = Path.of(DEFAULT_STORAGE_FILEPATH);
 
     public Storage(String filePath) /*throws InvalidStorageFilePathException*/ {

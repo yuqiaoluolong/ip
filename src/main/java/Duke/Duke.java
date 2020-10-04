@@ -89,6 +89,6 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        new Duke("/Users/yuqiao/Desktop/CS2113T/ip/data/duke.txt").run();
+        new Duke("Duke.txt").run();
     }
 }
